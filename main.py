@@ -12,7 +12,7 @@ from problem_1 import compute_potential
 # --------------------------------------------------------------
 
 # init params
-N  = 100
+N  = 1000 # have done N = 20, 100
 V0 = 1
 L  = np.pi
 
