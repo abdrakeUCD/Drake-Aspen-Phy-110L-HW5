@@ -1,0 +1,21 @@
+Contains the text answers for the questions embedded in problems 1, 2, and 3b.
+
+
+----------------------------------------------------------------
+[Problem 1] Which boundary condition in particular gets better modeled as N increases, and why?
+~~~
+
+
+
+
+----------------------------------------------------------------
+[Problem 2] State two things that quantitatively support that the field lines match the field you expect by taking minus the gradient.
+~~~
+
+
+
+
+----------------------------------------------------------------
+[Problem 3b] Interpret the output from 3a: where are the biggest fractional errors, and why?
+~~~
+
