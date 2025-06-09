@@ -16,7 +16,7 @@ from problem_3 import compute_exact_potential, compute_fractional_error
 # --------------------------------------------------------------
 
 # init params
-N  = 10 # have done N = 20, 100, 1000
+N  = 1000 # have done N = 10, 20, 100, 1000
 V0 = 1
 L  = np.pi
 
