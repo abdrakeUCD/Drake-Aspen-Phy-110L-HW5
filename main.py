@@ -9,7 +9,8 @@ from tqdm import tqdm
 
 from problem_1 import compute_potential
 from problem_2 import compute_electric_field, step_rk2, trace_field_line
- 
+from problem_3 import compute_exact_potential, compute_fractional_error
+
 # --------------------------------------------------------------
 #                           PROBLEM 1
 # --------------------------------------------------------------
@@ -38,6 +39,7 @@ ax.set_zlabel("V(x, y)")
 plt.tight_layout()
 plt.savefig(f"plots/problem_1_potential_N{N}.png")
 plt.close()
+print(f"Plot saved for problem 1 as plots/problem_1_potential_N{N}.png")
 
 
 # --------------------------------------------------------------
@@ -72,7 +74,7 @@ for point in starting_points:
     #print(f"plotted field line started at {point}")
 '''
 # plot field lines (using tqdm for loading bar)
-for point in tqdm(starting_points, desc="Tracing field lines"):
+for point in tqdm(starting_points, desc="Problem 2: tracing field lines"):
     xs, ys = trace_field_line(
         starting_point=point,
         field_fn=field_fn,
@@ -91,6 +93,7 @@ plt.ylim(0, 2 * L)
 plt.grid(True)
 plt.savefig(f"plots/problem_2_fieldlines_N{N}.png")
 plt.close()
+print(f"Plot saved for problem 2 as plots/problem_2_fieldlines_N{N}.png")
 
 
 # --------------------------------------------------------------
@@ -101,9 +104,23 @@ plt.close()
 #                              a. 
 #                             ~~~~
 
+# reuse same meshgrid
+V_series = compute_potential(X, Y, N=N, V0=V0, L=L)
+V_exact  = compute_exact_potential(X, Y, V0=V0, L=L)
 
-#                             ~~~~ 
-#                              b. 
-#                             ~~~~
+frac_error = compute_fractional_error(V_series, V_exact)
 
-
+# plot error map
+plt.figure(figsize=(8, 6))
+plt.imshow(frac_error,
+           extent=[0, L, 0, 2 * L],
+           origin='lower',
+           cmap='plasma',
+           aspect='auto')
+plt.colorbar(label='Fractional Error')
+plt.title(f'Fractional Error of Series vs Exact Potential (N={N})')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.savefig(f"plots/problem_3a_frac_error_N{N}.png")
+plt.close()
+print(f"Plot saved for problem 3 as plots/problem_3a_frac_error_N{N}.png")
