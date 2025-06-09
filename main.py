@@ -5,14 +5,17 @@ Main file through which code is run.
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
+from tqdm import tqdm
+
 from problem_1 import compute_potential
+from problem_2 import compute_electric_field, step_rk2, trace_field_line
  
 # --------------------------------------------------------------
 #                           PROBLEM 1
 # --------------------------------------------------------------
 
 # init params
-N  = 1000 # have done N = 20, 100
+N  = 10 # have done N = 20, 100, 1000
 V0 = 1
 L  = np.pi
 
@@ -42,6 +45,52 @@ plt.close()
 # --------------------------------------------------------------
 
 
+# initialize seed points (y approx 0 to avoid singularity at y = 0)
+n_lines = 50
+x_vals = np.linspace(0, L, n_lines)
+starting_points = [(x, 0.001) for x in x_vals]  # slightly above y = 0
+
+# define bounds for termination
+bounds = (0, L, 0, 2 * L)
+
+# define the field function
+field_fn = lambda x, y: compute_electric_field(x, y, N=N, V0=V0, L=L)
+
+# plot field lines (if you dont want to use tqdm)
+'''
+plt.figure(figsize=(8, 6))
+for point in starting_points:
+    xs, ys = trace_field_line(
+        starting_point=point,
+        field_fn=field_fn,
+        step_size=0.01,
+        max_steps=2000,
+        bounds=bounds,
+        propogation_coefficient=1  # move with the field
+    )
+    plt.plot(xs, ys, color="black", linewidth=0.7)
+    #print(f"plotted field line started at {point}")
+'''
+# plot field lines (using tqdm for loading bar)
+for point in tqdm(starting_points, desc="Tracing field lines"):
+    xs, ys = trace_field_line(
+        starting_point=point,
+        field_fn=field_fn,
+        step_size=0.01,
+        max_steps=2000,
+        bounds=bounds,
+        propogation_coefficient=1
+    )
+    plt.plot(xs, ys, color="black", linewidth=0.7)
+
+plt.title(f"Electric Field Lines from y=0 Boundary (N={N})")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.xlim(0, L)
+plt.ylim(0, 2 * L)
+plt.grid(True)
+plt.savefig(f"plots/problem_2_fieldlines_N{N}.png")
+plt.close()
 
 
 # --------------------------------------------------------------
