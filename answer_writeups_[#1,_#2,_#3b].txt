@@ -4,13 +4,46 @@ Contains the text answers for the questions embedded in problems 1, 2, and 3b.
 ----------------------------------------------------------------
 [Problem 1] Which boundary condition in particular gets better modeled as N increases, and why?
 ~~~
+The boundary condition at y = 0 is better modeled as N 
+increases.
 
+This is because the Fourier sine series used in the potential 
+approximation is constructed to match the condition 
+V(x, 0) = V_0. As N increases, more sine modes are included, 
+which allows the series to better approximate the features of 
+the boundary condition which are not nearly smooth except at the
+asymptote. 
 
+This is visible in the graphs: higher N results in the potential
+at y = 0 converging more closely to a flat plateau at V_0, while
+lower N exhibits visible oscillations.
 
 
 ----------------------------------------------------------------
 [Problem 2] State two things that quantitatively support that the field lines match the field you expect by taking minus the gradient.
 ~~~
+1. Field lines are perpendicular to the boundary at y = 0:
+   	Since the potential is constant on the bottom boundary 
+   	(V(x, 0) = V_0), the gradient vector \nabla V must be 
+	purely vertical at this edge. The field lines in all 
+	four plots (N = 10, 20, 100, 100) rise vertically from 
+	y \approx 0, confirming they follow -\nabla V. This is 
+	especially clear at x = \frac{\pi}{2}, where the field 
+	is symmetric and strongest.
+
+2. Field lines compress and align with steep potential 
+   gradients:
+   	As N increases, the Fourier series captures sharper 
+	spatial variation in the potential near x = 0 and x = L.	Correspondingly, the field lines bunch more tightly in 
+	these regions and exhibit more curvature. This reflects 
+	a stronger horizontal component of the electric field, 
+	i.e. larger \left|-\frac{\partial V}{\partial x}\right|,
+	accurately matching the increasing spatial frequency of
+	V. For example, the N=1000 plot shows more lines and 
+	sharper bends near the edges than N=10, consistent with
+	the steepening gradient. You can also see that low N
+	has a bubbling effect induced by the ripples at the edge
+	which are in line with the anticipated behavior.
 
 
 
@@ -19,3 +52,8 @@ Contains the text answers for the questions embedded in problems 1, 2, and 3b.
 [Problem 3b] Interpret the output from 3a: where are the biggest fractional errors, and why?
 ~~~
 
+The largest fractional errors occur at the corners, near x = 0
+and x = L for y = 0. This is due to a combination of smoothness
+effects (the Gibbs Phenomenon) and the singularity of the 
+\sinh\left( \frac{\pi y}{L} \right) function being in the
+demoninator for small y in the exact solution.
